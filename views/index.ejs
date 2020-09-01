@@ -1,0 +1,77 @@
+<%- include ('partials/header') %>
+
+
+<div class="jumbotron">
+  <h3 class="display-4">Dallas RV Rentals</h3>
+  <footer class="blockquote-footer"><cite title="Source Title">The Most Popular RV Rentals Website in DFW Area</cite></footer>
+  <% if(userinfo && userinfo.isAdmin){%>
+  <a class="btn btn-primary btn-lg" href="/rvs/new" role="button" method ="GET">Add new Rv</a>
+  <% } %>
+  
+  <br>
+<% if (userinfo) { %>
+  <h4>Welcome back, <%= userinfo.username %> </h4>
+  <a href = "/user/logout" type="submit" id="submit" class="btn btn-primary " >Log out</a>
+  <% }else{ %>
+  <a class="btn btn-primary" href="/user/new" role="button">Sign up</a>
+  <a href = "/user/login" type="submit" id="submit" class="btn btn-primary " >Log in</a>
+  <h4>Welcome, Guest </h4>
+  <% } %>
+</div>
+
+<div class="container" style="margin-bottom: 3%">
+
+<h6>Search For Your Rentals</h6>
+<form action="/" method="GET" class="" id="rv-search">
+	<div class="row">
+		<div class="form-group col">
+      		<input type="text" name="search" id="rv-make" placeholder="Search..." class="form-control">
+  		</div>
+  	<div class="form-group col">
+      <select class="form-control" name="type"  id="rv_type">
+        <option value="all">All</option>
+        <option value="Class-A">Class A</option>
+        <option value="Class-B">Class B</option>
+        <option value="Class-C">Class C</option>
+        <option value="Travel-Trailer">Travel Trailer</option>
+        <option value="Fifth-Wheel">Fifth Wheel</option>
+        <option value=">Toy-Hauler">Toy Hauler</option>
+      </select>
+    </div>
+	</div>
+  
+  </form>
+</div>
+
+<div class="container">
+ <div class="row" id="rv-grid">
+<% Rvs.forEach(function(Rv){ %>
+
+	<div class="md-col-4" style="margin-left: 4% ;" >
+		<a href="rvs/<%= Rv._id %>" >
+      <img src="images/<%= Rv.image[0]%>" style="width:300px; height:200px;" />
+    </a>
+
+      
+		<div class="caption" style="text-align: center; font-size: 1.2rem"><a href="rvs/<%= Rv._id %>"><%= Rv.make %>  <%= Rv.model %>
+    <%if(Rv.isdeleted){%>
+      (Deleted)
+    <%}%>
+
+    </a></div>
+	</div>
+<%});%>
+
+</div>
+
+<div class="container mx-auto" style="width: 200px; margin-top: 4% ">
+<nav aria-label="Page navigation example" >
+  <ul class="pagination" id="page-grid">
+  	<% for(var i = 0; i < pages; i ++) { %>
+    <li class="page-item"><a class="page-link" href="?page=<%=i+1%>"><%= i+1%></a></li>
+    <% } %>
+  </ul>
+</nav>
+</div>
+<%- include ('partials/footer') %>
+

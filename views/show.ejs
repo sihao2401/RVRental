@@ -1,0 +1,88 @@
+<%- include ('partials/header') %>
+
+
+<div class="container">
+<h1> RV Details </h1>
+<div class="row">
+	
+<% Rv.image.forEach(function(img){ %>
+	<p><img src="/images/<%= img %>" style="width:300px; height:200px"  class="img-thumbnail"/></p>
+<%});%>
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Year</th>
+      <td><%= Rv.year %></td>
+    </tr>
+    <tr>
+      <th scope="row">Make</th>
+      <td><%= Rv.make %></td>
+    </tr>
+    <tr>
+      <th scope="row">Model</th>
+      <td><%= Rv.model %></td>
+    </tr>
+    <tr>
+      <th scope="row">Type</th>
+      <td><%= Rv.type %></td>
+    </tr>
+    <tr>
+      <th scope="row">Price</th>
+      <td><%= Rv.price %></td>
+    </tr>
+    <tr>
+      <th scope="row">In Stock</th>
+	<%if(Rv.stock ==0){%>
+      <td ><font color="red">Sorry, This Rv is out of stock temporarily. <br>You can add it to wish list. </font></td>
+    <%}else {%>
+    	<td ><%= Rv.stock %></td>
+    <%}%>
+    </tr>
+    <tr>
+      <th scope="row">Location</th>
+      <td><%= Rv.location %></td>
+    </tr>
+    <tr>
+      <th scope="row">Description</th>
+      <td><%= Rv.description %></td>
+    </tr>
+  </tbody>
+</table>
+<% if(userinfo && userinfo.isAdmin){%>
+<div class="container">
+  <a class="btn btn-warning" href="/rvs/edit/<%= Rv._id%>" role="button">Edit video</a>
+  <%if(!Rv.isdeleted){%>
+  <form action="/rvs/<%= Rv._id %>?_method=DELETE" method="POST">
+  	<button type="submit" class="btn btn-danger">Delete This</button>
+  </form>
+  <%}else{ %>
+  <form action="/rvs/<%= Rv._id %>?_method=DELETE" method="POST">
+    <button type="submit" class="btn btn-success">Recover This</button>
+  </form>
+  <%}%>
+ </div>
+<% } else {%>
+<% if(userinfo){%>
+<%if(Rv.stock>0){%>
+	<a class="btn btn-primary" href="/rent/<%= Rv._id%>" role="button" method="GET">Add to Cart</a>
+	<%}%>
+	<a class="btn btn-primary" href="/addwishlist/<%= Rv._id%>" role="button" method="GET">Add to WishList</a>
+<% }else{%>
+	<p>Before Add to Cart, Please <a href="/user/login" method="POST">Log In</a></p>
+<%} %>
+<p>
+<a href="/" method="POST">Back to List</a>
+</p>
+<%}%>
+
+</div>
+<%- include ('partials/footer') %>

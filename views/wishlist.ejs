@@ -1,0 +1,59 @@
+<%- include ('partials/header') %>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+
+
+}
+.middle {
+  margin: auto;
+    width: 70%;
+
+    padding: 10px;
+}
+</style>
+<% if(foundUser.length>0){%>
+<h1 class="container" ><%= foundUser[0].username %>'s Wish List</h1>
+
+<div class="middle">
+  
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+              <th>RV You Liked</th>
+              <th>Remove?</th>
+            </tr>
+        </thead>
+        <tbody style="text-align: center;">
+        <% foundUser.forEach(function(product){ %>
+          <tr><td style="vertical-align: middle;"><a href="/rvs/<%= product.rvid%>"><%= product.rvyear%> <%= product.rvmake %> <%= product.rvmodel %></a></td><td>
+          <form action="/wishlist/<%= product.userid%>/?_method=DELETE" method="POST">
+            <input  name="pid" id="pid" value="<%= product._id %>" type="hidden" /><br>
+            <button type="submit" class="btn btn-danger">Remove</button>
+          </form>
+
+          </td></tr>
+        <% }); %>
+        </tbody>
+    </table>
+    <div class="text-right middle">
+    <a href = "/" type="submit" id="submit" class="btn btn-primary" >Back to Homepage</a>
+    
+    </div>
+    <% }else{ %>
+       <div class="card middle" style="width: 50rem;">
+          <div class="card-body">
+            <h5 class="card-title">Wish List</h5>
+            <p class="card-text">You don't have wish RV right now. Please add it on the detail page.</p>
+            <a href = "/" type="submit" id="submit" class="btn btn-primary" >Back to Homepage</a>
+          </div>
+        </div>
+    <% } %> 
+</div>
+
+</body>
+</html>

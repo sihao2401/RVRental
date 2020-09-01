@@ -1,0 +1,83 @@
+<%- include ('partials/header') %>
+
+<style>
+.middle {
+  margin: auto;
+    width: 50%;
+
+    padding: 10px;
+}
+</style>
+
+<div class="container middle">
+	<h2>Please Tell Us Your Schedule</h2>
+	<h4>Your choice is : <%=Rv.year%> <%=Rv.make%> <%=Rv.model%></h4>
+	
+<form action="/addcart" method="POST" id="rent-form">
+  <div class="form-group">
+    <label for="from">Pick-up Date</label>
+    <input type="text" class="form-control" id="from" name="from" placeholder="mm/dd/year">
+  </div>
+  <div class="form-group">
+    <label for="to">Return Date</label>
+    <input type="text" class="form-control" id="to" name="to" placeholder="mm/dd/year">
+  </div>
+  <div class="form-group">
+    <label for="days">Days</label>
+    <input type="text" class="form-control" id="days" name="days" >
+  </div>
+  <div class="form-group">
+    <label for="total">Total Price</label>
+    <input type="text" class="form-control" id="total" name="total" >
+  </div>
+  <input type="hidden" name="pid" id="pid" value="<%=Rv._id%>" />
+  <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+  <a class="btn btn-primary" href="/rvs/<%=Rv._id%>" role="button">Cancel</a>
+</form>	
+
+
+<script type="text/javascript">
+	
+$(document).ready(function() {
+  $( "#from" ).datepicker({
+    altField: "#alternate",
+    altFormat: "DD, d MM, yy",
+    minDate: new Date(),
+    maxDate: "+60D",
+    onSelect: function(selected) {
+      $("#to").datepicker("option","minDate", selected);
+      calcDiff();
+    }
+  });
+
+  $( "#to" ).datepicker({
+    altField: "#alternate1",
+    altFormat: "DD, d MM, yy",
+    minDate: new Date( (new Date()).getTime() + 86400000 ),
+    maxDate:"+60D",
+    onSelect: function(selected) {
+      $("#from").datepicker("option","maxDate", selected);
+      calcDiff();
+    }
+  });
+
+  function calcDiff() {
+    var date1 = $('#from').datepicker('getDate');
+    var date2 = $('#to').datepicker('getDate');
+    var diff = 0;
+    $('#datesbetween').empty();
+    if (date1 && date2) {
+      diff = Math.floor((date2.getTime() - date1.getTime()) / 86400000);
+      $('#days').val(diff+1);
+      $("#total").val((diff+1) * <%= Rv.price %>);
+    }
+  }
+});
+</script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+
+</body>
+</html>

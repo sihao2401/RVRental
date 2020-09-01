@@ -1,0 +1,53 @@
+<%- include ('partials/header') %>
+
+
+<style>
+
+table, th, td {
+  border: 2px solid black;
+  
+}
+th, td {
+  padding: 15px;
+}
+
+.middle {
+  margin: auto;
+    width: 70%;
+    padding: 10px;
+}
+
+</style>
+<body>
+<h1 class="middle" ><%= user %>'s cart</h1>
+
+<div class="middle">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Product Name</th>
+                <th>Picture</th>
+                <th>Start Date</th>
+                <th>Rent days</th>
+                <th>Unit Price</th>
+                <th>Subtotal</th>
+                <th>Update Action</th>
+            </tr>
+        </thead>
+        <tbody>
+    <% cart.forEach(function(product){ %>
+          <tr><td><%= product.name %></td><td><img src="/images/<%= product.image %>" style="width:200px; height:200px;" class="img-thumbnail" /></td><td><%= product.fromdate %></td><td><%= product.days %></td><td><%= product.unitprice %></td><td><%= product.total %></td><td><a href="<%= product.username %>/<%= product._id %>">edit</a></td></tr>
+    <% }); %>
+        </tbody>
+    </table>
+    <div class="text-right">
+      <h4>Total:<%= subtotal %></h4>
+    </div>  
+</div>
+
+<div class="text-right middle">
+    <a href = "/checkout/<%= user %>" method="GET" type="submit" id="submit" class="btn btn-primary">Check Out</a>
+    <a href = "/" type="submit" id="submit" class="btn btn-primary" >Back To List</a>
+</div>
+</body>
+</html>

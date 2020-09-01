@@ -1,0 +1,30 @@
+<%- include ('partials/header') %>
+
+
+<style>
+.middle {
+  margin: auto;
+    width: 50%;
+
+    padding: 10px;
+}
+</style>
+
+<h1 class="middle" >User login</h1>
+
+<form class="middle" action="/checkpassword" method="POST" class="signup">
+  
+  <div class="form-group">
+    <label for="username">Username:</label>
+    <input type="text" class="form-control" name="username" id="username">
+  </div>
+  <div class="form-group">
+    <label for="password">Password:</label>
+    <input type="password" class="form-control" name="password" id="password">
+  </div>
+ 
+  <button type="submit" id="submit" class="btn btn-primary">Submit</button>
+</form>
+
+</body>
+</html>

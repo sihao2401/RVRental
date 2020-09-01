@@ -1,0 +1,45 @@
+<%- include ('partials/header') %>
+<style>
+table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 15px;
+}
+</style>
+
+<h1 class="container" ><%= user %>'s cart</h1>
+<h2 class="container" >Here is the item you want to edit:</h2>
+
+<form class="container" action="/editcart/<%= cart[0].userid %>/<%= cart[0]._id %>" method="get" class="signup">
+<div class="middle">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+	            <th>Picture</th>
+	            <th>Rent Days</th>
+	            <th>Unit Price</th>
+	            <th>Remove?</th>
+            </tr>
+        </thead>
+        <tbody>
+    	<tr>
+				<td><label for="username"><%= cart[0].name %></label></td>
+				<td><img src="/images/<%= cart[0].image %>" style="width:200px; height:200px;" class="img-thumbnail" /></td>
+
+				<td><input type="text" name="rentdays" id="rentdays" placeholder =<%= cart[0].days %> ></td>
+				<td><label for="username"><%= cart[0].unitprice %></label></td>
+                <td><a href="/editcart/remove/<%= cart[0].userid %>/<%= cart[0]._id %>">remove</a></td>
+			</tr>
+        </tbody>
+    </table> 
+</div>
+<div class="text-right middle">
+    <button type="submit" id="submit" class="btn btn-primary">Modify</button>
+    <a href = "/cart/<%= cart[0].userid %>" type="submit" id="submit" class="btn btn-primary" >Cancel</a>
+</div>
+</form>
+</body>
+</html>
